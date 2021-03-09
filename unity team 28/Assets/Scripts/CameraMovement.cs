@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-
+    // The amount of pixels from the edge of the screen to activate scrolling
     private float threshold = 50F;
+    // The time it takes for the camera to arrive at its target (e.g. from moving to stopped)
     public float smoothTime = 0.3F;
+    // The magnitude of the force applied to the camera by the mouse cursor
     public float speed = 5F;
+    // The current velofity of the camera (updated by SmoothDamp function)
     private Vector3 velocity = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
     {
-        //target = new Transform();
-        //target.position = new Vector3(0, 0, 0);
+        
     }
 
     // Update is called once per frame
@@ -44,7 +46,9 @@ public class CameraMovement : MonoBehaviour
             movementVec += new Vector3(0, -speed, 0);
         }
 
+        // Turn our movement vector into a target point
         Vector3 targetPos = transform.TransformPoint(movementVec);
+        // Then use SmoothDamp to ease the camera to that target
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
     }
 }
