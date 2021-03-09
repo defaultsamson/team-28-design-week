@@ -8,6 +8,9 @@ public class Pet : MonoBehaviour
     public float speed = 0f;
     //Pets max speed
     public float maxSpeed = 3f;
+    //Pets minimum speed
+    public float minSpeed = 1f;
+
     //The target the pet moves to
     public Transform target;
 
@@ -32,7 +35,7 @@ public class Pet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //Finds a point that is a specific distance away from the target 
@@ -52,7 +55,20 @@ public class Pet : MonoBehaviour
 
     void DebugMove()
     {
-        StartCoroutine(MoveWithin(target, standDist));
+
+        float rn = Random.Range(0f, 1f);
+        Debug.Log(rn);
+        if (rn > 0.5f)
+        {
+            StartCoroutine(MoveWithin(target, standDist));
+        }
+        else
+        {
+            Vector2 randomPoint = GameManager.Instance.ClampInBounds(
+                (Vector2)transform.position + (Random.insideUnitCircle * Random.Range(3f, 7f))
+                );
+            StartCoroutine(MoveTo(randomPoint));
+        }
     }
 
     //Coroutine to move with a certain distance of a target
@@ -63,19 +79,45 @@ public class Pet : MonoBehaviour
         while (distance > acceptableVariance)
         {
             distance = Vector2.Distance(TargetPoint(target.position, dist), transform.position);
-            
-            if(distance > distToSlow)
+
+            if (distance > distToSlow)
             {
                 speedRef = Mathf.MoveTowards(speedRef, 1, Time.deltaTime);
-            } else speedRef = Mathf.MoveTowards(speedRef, 0, Time.deltaTime);
+            }
+            else speedRef = Mathf.MoveTowards(speedRef, 0, Time.deltaTime);
 
-            speed = accelCurve.Evaluate(speedRef) * maxSpeed;
+            speed = minSpeed + accelCurve.Evaluate(speedRef) * maxSpeed;
 
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             yield return null;
         }
 
-        Invoke("DebugMove", 2f);
+        Invoke("DebugMove", Random.Range(1f, 3f));
     }
 
+    IEnumerator MoveTo(Vector2 point)
+    {
+
+        float speedRef = 0f;
+        float distance = Vector2.Distance(point, transform.position);
+        while (distance > acceptableVariance)
+        {
+            distance = Vector2.Distance(point, transform.position);
+
+            if (distance > distToSlow || speed < minSpeed)
+            {
+                speedRef = Mathf.MoveTowards(speedRef, 1, Time.deltaTime);
+            }
+            else
+            {
+                speedRef = Mathf.MoveTowards(speedRef, 0f, Time.deltaTime);
+            }
+
+            speed = minSpeed + accelCurve.Evaluate(speedRef) * maxSpeed;
+
+            transform.position = Vector2.MoveTowards(transform.position, point, speed * Time.deltaTime);
+            yield return null;
+        }
+        Invoke("DebugMove", Random.Range(1f, 3f));
+    }
 }
