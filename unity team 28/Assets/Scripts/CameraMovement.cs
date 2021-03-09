@@ -48,6 +48,8 @@ public class CameraMovement : MonoBehaviour
 
         // Turn our movement vector into a target point
         Vector3 targetPos = transform.TransformPoint(movementVec);
+        Vector2 pos = GameManager.Instance.ClampInBounds((Vector2)targetPos);
+        targetPos = new Vector3(pos.x, pos.y, targetPos.z);
         // Then use SmoothDamp to ease the camera to that target
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
     }
