@@ -7,7 +7,7 @@ public class CameraMovement : MonoBehaviour
 
     private float threshold = 50F;
     public float smoothTime = 0.3F;
-    public float speed = 3F;
+    public float speed = 5F;
     private Vector3 velocity = Vector3.zero;
 
     // Start is called before the first frame update
@@ -23,25 +23,25 @@ public class CameraMovement : MonoBehaviour
         Vector3 movementVec = Vector3.zero;
 
         // Right
-        if (Input.mousePosition.x >= Screen.width - threshold)
+        if (Input.GetKey(KeyCode.D) || Input.mousePosition.x >= Screen.width - threshold)
         {
             movementVec += new Vector3(speed, 0, 0);
         }
         // Left
-        else if (Input.mousePosition.x <= threshold)
+        else if (Input.GetKey(KeyCode.A) || Input.mousePosition.x <= threshold)
         {
             movementVec += new Vector3(-speed, 0, 0);
         }
         
         // Up
-        if (Input.mousePosition.y <= threshold)
-        {
-            movementVec += new Vector3(0, -speed, 0);
-        }
-        // Down
-        else if (Input.mousePosition.y >= Screen.height - threshold)
+        if (Input.GetKey(KeyCode.W) || Input.mousePosition.y >= Screen.height - threshold)
         {
             movementVec += new Vector3(0, speed, 0);
+        }
+        // Down
+        else if (Input.GetKey(KeyCode.S) || Input.mousePosition.y <= threshold)
+        {
+            movementVec += new Vector3(0, -speed, 0);
         }
 
         Vector3 targetPos = transform.TransformPoint(movementVec);
