@@ -7,6 +7,7 @@ public class DragDrop : MonoBehaviour
 {
     bool dragging;
     ShadowObject shadowObject;
+    SpriteRenderer sprite;
     public float dragElevation = 1.5f, elevationRate = 1f;
 
     public bool Dragging
@@ -17,17 +18,20 @@ public class DragDrop : MonoBehaviour
     public float dragSpeed = 5f;
     private void Awake()
     {
-        shadowObject = GetComponent<ShadowObject>();    
+        shadowObject = GetComponent<ShadowObject>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     private void OnMouseDown()
     {
         dragging = true;
+        sprite.sortingOrder++;
     }
 
     private void OnMouseUp()
     {
         dragging = false;
+        sprite.sortingOrder--;
     }
 
 

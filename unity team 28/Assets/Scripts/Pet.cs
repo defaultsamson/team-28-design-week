@@ -35,7 +35,7 @@ public class Pet : MonoBehaviour
         
     }
 
-
+    //Finds a point that is a specific distance away from the target 
     Vector2 TargetPoint(Vector2 point, float dist)
     {
         Vector2 _out;
