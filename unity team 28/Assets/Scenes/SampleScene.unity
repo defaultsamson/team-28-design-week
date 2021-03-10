@@ -948,6 +948,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragElevation: 0.8
   elevationRate: 4
+  landingAudio: {fileID: 8300000, guid: bcc9a1dd71404824a968a814c32d5a5f, type: 3}
+  liftingAudio: {fileID: 8300000, guid: bcc9a1dd71404824a968a814c32d5a5f, type: 3}
   dragSpeed: 5
 --- !u!114 &674200409
 MonoBehaviour:
@@ -1154,6 +1156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragElevation: 0.8
   elevationRate: 4
+  landingAudio: {fileID: 8300000, guid: bcc9a1dd71404824a968a814c32d5a5f, type: 3}
+  liftingAudio: {fileID: 8300000, guid: bcc9a1dd71404824a968a814c32d5a5f, type: 3}
   dragSpeed: 5
 --- !u!114 &709906694
 MonoBehaviour:
@@ -1657,7 +1661,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955556081}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.8103793, y: -2.454143, z: 0}
+  m_LocalPosition: {x: -3.07, y: -1.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1677,6 +1681,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragElevation: 0.4
   elevationRate: 5
+  landingAudio: {fileID: 8300000, guid: bcc9a1dd71404824a968a814c32d5a5f, type: 3}
+  liftingAudio: {fileID: 8300000, guid: bcc9a1dd71404824a968a814c32d5a5f, type: 3}
   dragSpeed: 5
 --- !u!50 &955556087
 Rigidbody2D:
@@ -1838,6 +1844,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragElevation: 0.8
   elevationRate: 4
+  landingAudio: {fileID: 8300000, guid: bcc9a1dd71404824a968a814c32d5a5f, type: 3}
+  liftingAudio: {fileID: 8300000, guid: bcc9a1dd71404824a968a814c32d5a5f, type: 3}
   dragSpeed: 5
 --- !u!114 &1123730105
 MonoBehaviour:
