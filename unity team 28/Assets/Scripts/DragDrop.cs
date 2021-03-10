@@ -22,16 +22,23 @@ public class DragDrop : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
-        dragging = true;
-        sprite.sortingOrder++;
-        shadowObject.GravityEnabled = false;
+        Drag();
     }
 
     private void OnMouseUp()
     {
         Drop();
+    }
+
+
+    public void Drag(bool elevated = false)
+    {
+        dragging = true;
+        sprite.sortingOrder++;
+        shadowObject.GravityEnabled = false;
+        if (elevated) shadowObject.Elevate(dragElevation, false);
     }
 
     public void Drop()
@@ -54,6 +61,8 @@ public class DragDrop : MonoBehaviour
             {
                 shadowObject.Elevate(elevationRate * Time.deltaTime, false);
             }
+
+            if (Input.GetMouseButtonUp(0)) Drop();
         }
 
     }

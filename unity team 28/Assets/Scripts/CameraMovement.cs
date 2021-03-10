@@ -43,7 +43,7 @@ public class CameraMovement : MonoBehaviour
             movementVec += new Vector3(-speed, 0, 0);
         }
         
-        // Up
+        /*/ Up
         if (Input.GetKey(KeyCode.W) || Input.mousePosition.y >= Screen.height - threshold)
         {
             movementVec += new Vector3(0, speed, 0);
@@ -52,7 +52,7 @@ public class CameraMovement : MonoBehaviour
         else if (Input.GetKey(KeyCode.S) || Input.mousePosition.y <= threshold)
         {
             movementVec += new Vector3(0, -speed, 0);
-        }
+        }*/
 
         // Turn our movement vector into a target point
         Vector3 targetPos = transform.TransformPoint(movementVec);
