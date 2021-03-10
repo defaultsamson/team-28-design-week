@@ -10,8 +10,8 @@ public class DragDrop : MonoBehaviour
     SpriteRenderer sprite;
     public float dragElevation = 1.5f, elevationRate = 1f;
 
-    public AudioClip landingAudio; // When the object hits the ground
     public AudioClip liftingAudio; // When picking up an object
+    public AudioClip[] landingAudios;
     AudioSource audioSource; // The source of the sound in-game (usually attached to the object)
     bool landed = true;
 
@@ -74,8 +74,10 @@ public class DragDrop : MonoBehaviour
             if (!landed)
             {
                 // Play the sound at different volumes depending on the impact speed
-                float volume = Mathf.Clamp(Mathf.Abs(shadowObject.ElevationVelocity / 4F), 0.0F, 0.25F);
-                audioSource.PlayOneShot(landingAudio, volume);
+                float volume = Mathf.Clamp(Mathf.Abs(shadowObject.ElevationVelocity / 7F), 0.0F, 0.4F);
+                // Select a random landing audio
+                int rand = Random.Range(0, landingAudios.Length);
+                audioSource.PlayOneShot(landingAudios[rand], volume);
                 landed = true;
             }
         }
