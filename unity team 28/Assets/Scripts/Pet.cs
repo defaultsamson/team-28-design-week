@@ -57,7 +57,6 @@ public class Pet : MonoBehaviour
     {
 
         float rn = Random.Range(0f, 1f);
-        Debug.Log(rn);
         if (rn > 0.5f)
         {
             StartCoroutine(MoveWithin(target, standDist));

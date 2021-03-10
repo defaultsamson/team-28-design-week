@@ -49,7 +49,13 @@ public class GameManager : MonoBehaviour
             _outy = Mathf.Clamp(point.y, bounds.y, bounds.w);
         return new Vector2(_outx, _outy);
     }
-
+    //Adds further constraints to the bounds of the world space. Currently used by the camera.
+    public Vector2 ClampInBounds(Vector2 point, Vector2 notWithin)
+    {
+        float _outx = Mathf.Clamp(point.x, bounds.x + notWithin.x, bounds.z - notWithin.x),
+            _outy = Mathf.Clamp(point.y, bounds.y + notWithin.y, bounds.w - notWithin.y);
+        return new Vector2(_outx, _outy);
+    }
 }
 
 [Serializable]

@@ -13,10 +13,18 @@ public class CameraMovement : MonoBehaviour
     // The current velofity of the camera (updated by SmoothDamp function)
     private Vector3 velocity = Vector3.zero;
 
+    //The camera script
+    Camera cam;
+
+    //camera dimensions
+    float width, height;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        cam = GetComponent<Camera>();
+        height = cam.orthographicSize * 2;
+        width = height * cam.aspect;
     }
 
     // Update is called once per frame
@@ -48,7 +56,7 @@ public class CameraMovement : MonoBehaviour
 
         // Turn our movement vector into a target point
         Vector3 targetPos = transform.TransformPoint(movementVec);
-        Vector2 pos = GameManager.Instance.ClampInBounds((Vector2)targetPos);
+        Vector2 pos = GameManager.Instance.ClampInBounds((Vector2)targetPos, new Vector2(width/2,height/2));
         targetPos = new Vector3(pos.x, pos.y, targetPos.z);
         // Then use SmoothDamp to ease the camera to that target
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);

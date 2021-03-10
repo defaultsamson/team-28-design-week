@@ -26,12 +26,14 @@ public class DragDrop : MonoBehaviour
     {
         dragging = true;
         sprite.sortingOrder++;
+        shadowObject.GravityEnabled = false;
     }
 
     private void OnMouseUp()
     {
         dragging = false;
         sprite.sortingOrder--;
+        shadowObject.GravityEnabled = true;
     }
 
 
@@ -42,19 +44,12 @@ public class DragDrop : MonoBehaviour
         {
             Vector2 mouseDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
-            shadowObject.GravityEnabled = false;
             shadowObject.velocity = mouseDir * dragSpeed;
-
             if(shadowObject.Elevation < dragElevation)
             {
                 shadowObject.Elevate(elevationRate * Time.deltaTime, false);
             }
         }
-        else
-        {
-            shadowObject.GravityEnabled = true;
-        }
-        
 
     }
 
