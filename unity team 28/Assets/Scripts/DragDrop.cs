@@ -31,11 +31,16 @@ public class DragDrop : MonoBehaviour
 
     private void OnMouseUp()
     {
+        Drop();
+    }
+
+    public void Drop()
+    {
+        if (!dragging) return;
         dragging = false;
         sprite.sortingOrder--;
         shadowObject.GravityEnabled = true;
     }
-
 
     // Update is called once per frame
     void Update()
