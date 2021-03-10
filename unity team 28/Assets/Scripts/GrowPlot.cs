@@ -33,11 +33,16 @@ public class GrowPlot : MonoBehaviour
             ShadowObject shadowObject = seed.gameObject.GetComponent<ShadowObject>();
             if(shadowObject.Elevation <= 0f)
             {
-                Destroy(collision.gameObject);
-                PlantSeed();
+                if (!seed.consumed)
+                {
+                    seed.consumed = true;
+                    PlantSeed();
+                    Destroy(collision.gameObject);
+                }
             }
         }
     }
+
 }
 public enum GROWSTATE
 {

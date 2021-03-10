@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class Seed : MonoBehaviour
 {
-//This script is refernced by the GrowPlot script.
+    //This script is refernced by the GrowPlot script.
+    [HideInInspector]
+    public bool consumed = false;
 }
