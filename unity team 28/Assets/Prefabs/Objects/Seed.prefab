@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa0a1385c3349954d8e4f76748119b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemFab: {fileID: 2019388422129874518, guid: 4148463904ff1e143af73dc97b323243, type: 3}
   dragElevation: 0.8
   elevationRate: 4
   dragSpeed: 5

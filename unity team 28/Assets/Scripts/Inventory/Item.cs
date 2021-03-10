@@ -6,7 +6,7 @@ public class Item : MonoBehaviour
 {
     public GameObject ObjectFab;
     public GameObject InventorySlot;
-    bool dragging;
+    public bool dragging;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +24,13 @@ public class Item : MonoBehaviour
             if (!Inventory.Instance.Acitve)
             {
                 GameObject obj = Instantiate(ObjectFab);
-                obj.transform.position = mousePos;
+                obj.transform.position = GameManager.Instance.ClampInBounds(mousePos,new Vector2(4,4));
                 obj.GetComponent<DragDrop>().Drag(true);
-                dragging = false;
+                Inventory.Instance.Remove(this);
+                Destroy(gameObject);
             }
+
+            if (Input.GetMouseButtonUp(0)) dragging = false;
         }
         else
         {

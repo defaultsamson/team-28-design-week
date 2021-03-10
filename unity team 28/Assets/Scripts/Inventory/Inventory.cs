@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
     }
 
     public List<Item> items = new List<Item>();
-
+    public GameObject[] itemsSlots;
     bool active = false;
     public bool Acitve { get { return active; } }
     public GameObject graphics;
@@ -23,6 +23,7 @@ public class Inventory : MonoBehaviour
     void Start()
     {
         graphics.transform.localPosition = dormantPos;
+        UpdateItems();
     }
 
     // Update is called once per frame
@@ -47,5 +48,23 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void UpdateItems()
+    {
+        for(int i = 0; i < items.Count; i++)
+        {
+            items[i].InventorySlot = itemsSlots[i];
+        }
+    }
 
+    public void Remove(Item item)
+    {
+        items.Remove(item);
+        UpdateItems();
+    }
+
+    public void Add(Item item)
+    {
+        items.Add(item);
+        UpdateItems();
+    }
 }
