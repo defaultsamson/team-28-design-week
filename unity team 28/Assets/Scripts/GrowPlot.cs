@@ -24,6 +24,8 @@ public class GrowPlot : MonoBehaviour
     {
         state = GROWSTATE.Planted;
         GetComponent<SpriteRenderer>().color = Color.green;
+        // Play the seed plant sound
+        GetComponent<AudioSource>().Play();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
