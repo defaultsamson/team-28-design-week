@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Pet : MonoBehaviour
 {
@@ -26,17 +28,13 @@ public class Pet : MonoBehaviour
     //What is the animation curve it uses to accelerate.
     public AnimationCurve accelCurve;
 
+    public Coroutine coroutine;
+
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("DebugMove", 2f);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    
 
     //Finds a point that is a specific distance away from the target 
     Vector2 TargetPoint(Vector2 point, float dist)
@@ -53,25 +51,24 @@ public class Pet : MonoBehaviour
         return (Vector2)transform.position + _out;
     }
 
-    void DebugMove()
-    {
 
-        float rn = Random.Range(0f, 1f);
-        if (rn > 0.5f)
-        {
-            StartCoroutine(MoveWithin(target, standDist));
-        }
-        else
-        {
-            Vector2 randomPoint = GameManager.Instance.ClampInBounds(
+    public void Chase(NeedObject needObject, Action callBack)
+    {
+        if(coroutine!=null)StopCoroutine(coroutine);
+        coroutine = StartCoroutine(MoveWithin(needObject.transform, standDist, callBack));
+    }
+
+    public void Wander()
+    {
+        if (coroutine != null) StopCoroutine(coroutine);
+        Vector2 randomPoint = GameManager.Instance.ClampInBounds(
                 (Vector2)transform.position + (Random.insideUnitCircle * Random.Range(3f, 7f))
                 );
-            StartCoroutine(MoveTo(randomPoint));
-        }
+        StartCoroutine(MoveTo(randomPoint));
     }
 
     //Coroutine to move with a certain distance of a target
-    IEnumerator MoveWithin(Transform target, float dist)
+    IEnumerator MoveWithin(Transform target, float dist, Action callBack)
     {
         float speedRef = 0f;
         float distance = Vector2.Distance(TargetPoint(target.position, dist), transform.position);
@@ -91,7 +88,6 @@ public class Pet : MonoBehaviour
             yield return null;
         }
 
-        Invoke("DebugMove", Random.Range(1f, 3f));
     }
 
     IEnumerator MoveTo(Vector2 point)
@@ -117,6 +113,5 @@ public class Pet : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, point, speed * Time.deltaTime);
             yield return null;
         }
-        Invoke("DebugMove", Random.Range(1f, 3f));
     }
 }

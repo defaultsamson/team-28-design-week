@@ -8,6 +8,7 @@ public class DragDrop : MonoBehaviour
     public GameObject ItemFab;
     bool dragging;
     ShadowObject shadowObject;
+    NeedObject needObject;
     SpriteRenderer sprite;
     public float dragElevation = 1.5f, elevationRate = 1f;
 
@@ -21,6 +22,7 @@ public class DragDrop : MonoBehaviour
     {
         shadowObject = GetComponent<ShadowObject>();
         sprite = GetComponent<SpriteRenderer>();
+        needObject = GetComponent<NeedObject>();
     }
 
     public void OnMouseDown()
@@ -48,6 +50,7 @@ public class DragDrop : MonoBehaviour
         dragging = false;
         sprite.sortingOrder--;
         shadowObject.GravityEnabled = true;
+        if(needObject) GameManager.Instance.Introduce(needObject);
     }
 
     // Update is called once per frame

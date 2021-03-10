@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public NeedObject needObject;
     private void Awake()
     {
         if (Instance == null)
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
         }
         else Destroy(this);
     }
+    public Pet pet;
+    public PETSTATE state = PETSTATE.None;
     //The diffrent needs that will be turned to meters.
     public Need nutrition, energy, mood;
     //The health of the pet
@@ -61,6 +64,25 @@ public class GameManager : MonoBehaviour
             _outy = Mathf.Clamp(point.y, bounds.y + notWithin.y, bounds.w - notWithin.y);
         return new Vector2(_outx, _outy);
     }
+
+    public void Introduce(NeedObject needObject)
+    {
+        if(state == PETSTATE.None||
+            state == PETSTATE.Wandering ||
+            state == PETSTATE.Chasing)
+        {
+            this.needObject = needObject;
+            state = PETSTATE.Chasing;
+            pet.Chase(this.needObject,ChaseComplete);
+        }
+    }
+
+    public void ChaseComplete()
+    {
+        //Do Need Need Task
+
+    }
+
 }
 
 [Serializable]
@@ -71,6 +93,7 @@ public class Need
     float stat = 0.8f;
     [Range(0f, 0.01f)]
     public float decayRate = 0.01f;
+
     public float Stat 
     {
         get { return stat; }
@@ -82,4 +105,14 @@ public class Need
         Stat -= decayRate * Time.fixedDeltaTime;
     }
 
+}
+
+public enum PETSTATE
+{
+    None,
+    Wandering,
+    Chasing,
+    Kickin,
+    Eating,
+    Sleeping
 }
