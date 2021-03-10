@@ -38,7 +38,7 @@ public class GrowPlot : MonoBehaviour
         {
             //Then get its shadow object property to make sure its on the ground.
             ShadowObject shadowObject = seed.gameObject.GetComponent<ShadowObject>();
-            if(shadowObject.Elevation <= 0f)
+            if(shadowObject.Elevation <= 0.1f)
             {
                 //Only consume the seed if you are the first plot to do so.
                 if (!seed.consumed)
