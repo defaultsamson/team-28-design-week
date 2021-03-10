@@ -32,7 +32,10 @@ public class ShadowObject : MonoBehaviour
     public Vector2 velocity;
     [SerializeField]
     float elevationVelocity = 0f;
-
+    public float ElevationVelocity
+    {
+        get { return elevationVelocity; }
+    }
 
     // Start is called before the first frame update
     void Start()
