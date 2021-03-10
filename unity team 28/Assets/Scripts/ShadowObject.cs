@@ -16,7 +16,7 @@ public class ShadowObject : MonoBehaviour
     public float weight = 1f;
     public float friction = 14f;
 
-    //Gravity Variables
+    //Gravity Variables. U
     public static float Grav = -9.8f;
     [HideInInspector]
     public bool GravityEnabled = true;
@@ -43,6 +43,7 @@ public class ShadowObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //move the object based on its velocity
         transform.position += (Vector3)velocity * Time.deltaTime;
 
         if (elevation <= 0f) {
@@ -53,10 +54,12 @@ public class ShadowObject : MonoBehaviour
             }
             else
             {
+                //If the object is on the ground and has not stopped, slow it by using the friction variable
                 velocity = Vector2.MoveTowards(velocity, Vector2.zero, friction * Time.deltaTime);
             }
         } else
         {
+            //Only apply gravity if gravity is enabled, drag and drop stops this.
             if (GravityEnabled)
             {
                 elevationVelocity += Grav * Time.deltaTime;
@@ -64,10 +67,12 @@ public class ShadowObject : MonoBehaviour
             }
            
         }
-
+        //The shadow should always be below the object
         shadow.transform.position = new Vector2(transform.position.x, transform.position.y + shadowOffset - elevation);
     }
 
+    //Elevate moves the object up if shadowPivot is true, by compensating for the movement.
+    //If false, the shadow simpley moves down.
     public void Elevate(float raise, bool shadowPivot = true)
     {
         grounded = false;
@@ -124,7 +129,21 @@ public class ShadowObject : MonoBehaviour
                 break;
         }
     }
-
+    public virtual void HitVertical()
+    {
+        switch (impactType)
+        {
+            case IMPACTTYPE.Bounce:
+                velocity = new Vector2(velocity.x, velocity.y * -1);
+                break;
+            case IMPACTTYPE.Slide:
+                velocity = new Vector2(velocity.x, velocity.y * -1);
+                break;
+            case IMPACTTYPE.Stop:
+                velocity = new Vector2(velocity.x, 0f);
+                break;
+        }
+    }
 
     private void OnDestroy()
     {

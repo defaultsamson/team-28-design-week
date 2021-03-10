@@ -15,14 +15,18 @@ public class GameManager : MonoBehaviour
         }
         else Destroy(this);
     }
-
+    //The diffrent needs that will be turned to meters.
     public Need nutrition, energy, mood;
+    //The health of the pet
     [Range(0f, 1f)]
     public float health;
 
+    //An array of the needs to make programming with all of them more simple and clean.
     Need[] needs;
-    public Transform min, max;
 
+    //The bounds of the world
+    public Transform min, max;
+    //A Vector 4 that will track it. x/y is the bottom left corner, z/w is the top right cornder.
     public Vector4 bounds;
 
     // Start is called before the first frame update
@@ -43,6 +47,7 @@ public class GameManager : MonoBehaviour
         foreach (Need need in needs) need.DecayTick();
     }
 
+    //A clamp used to ensure the properties stay in bounds.
     public Vector2 ClampInBounds(Vector2 point)
     {
         float _outx = Mathf.Clamp(point.x, bounds.x, bounds.z),
