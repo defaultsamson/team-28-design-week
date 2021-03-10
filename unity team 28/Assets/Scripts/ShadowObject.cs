@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShadowObject : MonoBehaviour
 {
+    public GameObject shadowFab;
+    [HideInInspector]
     public GameObject shadow;
     public float shadowOffset = -0.2f;
     public float weight = 1f;
@@ -24,7 +26,7 @@ public class ShadowObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+        shadow = Instantiate(shadowFab);
     }
 
     // Update is called once per frame
@@ -48,8 +50,6 @@ public class ShadowObject : MonoBehaviour
         shadow.transform.position = new Vector2(transform.position.x, transform.position.y + shadowOffset - elevation);
     }
 
-
-
     public void Elevate(float raise, bool shadowPivot = true)
     {
         elevation += raise;
@@ -57,5 +57,10 @@ public class ShadowObject : MonoBehaviour
             transform.position += Vector3.up * raise;
         }
 
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(shadow);
     }
 }
