@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 
 public class Pet : MonoBehaviour
 {
+    public Animator animator;
+
     //Speed the pet is currently moving at
     public float speed = 0f;
     //Pets max speed
@@ -16,8 +18,6 @@ public class Pet : MonoBehaviour
     //The target the pet moves to
     public Transform target;
 
-    //How far does the pet want to stand from its target? 
-    public float standDist = 2f;
     /*How lenient are we with where the pet should be standing. 
      * Increase this number if the pet jitters when it reaches the target
      * Decrease this number if the pet stops abruptly at its target location.
@@ -30,9 +30,13 @@ public class Pet : MonoBehaviour
 
     public Coroutine coroutine;
 
+    float scale;
+
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
+        scale = transform.localScale.x;
     }
     
 
@@ -55,7 +59,7 @@ public class Pet : MonoBehaviour
     public void Chase(NeedObject needObject, Action callBack)
     {
         if(coroutine!=null)StopCoroutine(coroutine);
-        coroutine = StartCoroutine(MoveWithin(needObject.transform, standDist, callBack));
+        coroutine = StartCoroutine(MoveWithin(needObject, callBack));
     }
 
     public void Wander()
@@ -68,13 +72,13 @@ public class Pet : MonoBehaviour
     }
 
     //Coroutine to move with a certain distance of a target
-    IEnumerator MoveWithin(Transform target, float dist, Action callBack)
+    IEnumerator MoveWithin(NeedObject target, Action callBack)
     {
         float speedRef = 0f;
-        float distance = Vector2.Distance(TargetPoint(target.position, dist), transform.position);
+        float distance = Vector2.Distance(target.ClosestPos((Vector2)transform.position).position, transform.position);
         while (distance > acceptableVariance)
         {
-            distance = Vector2.Distance(TargetPoint(target.position, dist), transform.position);
+            distance = Vector2.Distance(target.ClosestPos((Vector2)transform.position).position, transform.position);
 
             if (distance > distToSlow)
             {
@@ -83,11 +87,16 @@ public class Pet : MonoBehaviour
             else speedRef = Mathf.MoveTowards(speedRef, 0, Time.deltaTime);
 
             speed = minSpeed + accelCurve.Evaluate(speedRef) * maxSpeed;
+            if (target.gameObject.transform.position.x > transform.position.x)
+                transform.localScale = new Vector3(-scale, scale, 1f);
+            else
+                transform.localScale = new Vector3(scale, scale, 1f);
+            transform.position = Vector2.MoveTowards(transform.position, target.ClosestPos((Vector2)transform.position).position, speed * Time.deltaTime);
 
-            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+
             yield return null;
         }
-
+        callBack.Invoke();
     }
 
     IEnumerator MoveTo(Vector2 point)
@@ -113,5 +122,18 @@ public class Pet : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, point, speed * Time.deltaTime);
             yield return null;
         }
+    }
+
+    public void ResetAnimations()
+    {
+        animator.SetBool("Wander", false);
+        animator.SetBool("WanderUnsatisfied", false);
+        animator.SetBool("Eating", false);
+        animator.SetBool("Sleep", false);
+    }
+    public void ResetAnimations(string anim)
+    {
+        ResetAnimations();
+        animator.SetBool(anim, true);
     }
 }

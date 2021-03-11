@@ -74,14 +74,17 @@ public class GameManager : MonoBehaviour
             this.needObject = needObject;
             state = PETSTATE.Chasing;
             pet.Chase(this.needObject,ChaseComplete);
+            pet.ResetAnimations("Wander");
         }
     }
 
     public void ChaseComplete()
     {
         //Do Need Need Task
-
+        pet.ResetAnimations();
     }
+
+
 
 }
 
