@@ -233,6 +233,9 @@ MonoBehaviour:
   NeedPos:
   - {fileID: 382375713708328292}
   - {fileID: 1126277039729429237}
+  nutritionGain: 0.15
+  energyGain: 0
+  moodGain: 0.2
 --- !u!1 &5873249029921227668
 GameObject:
   m_ObjectHideFlags: 0

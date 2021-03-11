@@ -231,3 +231,6 @@ MonoBehaviour:
   toState: 5
   NeedPos:
   - {fileID: 1702070631074494778}
+  nutritionGain: 0
+  energyGain: 0.3
+  moodGain: 0

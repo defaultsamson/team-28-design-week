@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ public class NeedObject : MonoBehaviour
     public PETSTATE toState = PETSTATE.Eating;
 
     public Transform[] NeedPos;
+
+    [Range(0, 1)]
+    public float nutritionGain, energyGain, moodGain; 
 
     public Transform ClosestPos(Vector2 pos)
     {

@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     [Range(0f, 1f)]
     public float health;
 
+    public HealthBar healthBar;
+
     //An array of the needs to make programming with all of them more simple and clean.
     Need[] needs;
 
@@ -61,7 +63,21 @@ public class GameManager : MonoBehaviour
 
    void FixedUpdate()
     {
-        foreach (Need need in needs) need.DecayTick();
+        int goodMoods = 0;
+        foreach (Need need in needs)
+        {
+            need.DecayTick();
+            if (need.Stat <= 0f)
+            {
+                health -= 0.05f * Time.fixedDeltaTime;
+            }
+            else if (need.Stat >= 0.8) goodMoods++;
+        }
+
+        if (goodMoods == 3) health += 0.05f * Time.fixedDeltaTime;
+        health = Mathf.Clamp(health, 0f, 1f);
+
+        healthBar.SetHealth(health);
     }
 
     public void PetMove()
@@ -113,22 +129,23 @@ public class GameManager : MonoBehaviour
         }
         state = needObject.toState;
 
+        nutrition.Stat += needObject.nutritionGain;
+        energy.Stat += needObject.energyGain;
+        mood.Stat += needObject.moodGain;
+
         switch (state)
         {
             case PETSTATE.Eating:
-                nutrition.Stat += 0.2f;
                 pet.animator.SetBool("Eating", true);
                 pet.Wait(animSettings.EatTime, Celebrate);
                 needObject.Lock();
             break;
             case PETSTATE.Sleeping:
-                energy.Stat += 0.3f;
                 pet.animator.SetBool("Sleep", true);
                 pet.Wait(animSettings.SleepTime, Celebrate);
                 needObject.Lock();
             break;
             case PETSTATE.Kicking:
-                mood.Stat += 0.1f;
                 needObject.GetComponent<DragDrop>().Drop();
                 Vector2 kickVel = Random.insideUnitCircle * Random.Range(12f, 15f);
                 needObject.GetComponent<ShadowObject>().Launch(kickVel, 2f);
@@ -208,6 +225,8 @@ public class Need
     [Range(0f, 0.01f)]
     public float decayRate = 0.01f;
 
+    public HealthBar bar;
+
     public float Stat 
     {
         get { return stat; }
@@ -217,6 +236,7 @@ public class Need
     public void DecayTick()
     {
         Stat -= decayRate * Time.fixedDeltaTime;
+        bar.SetHealth(Stat);
     }
 
 }

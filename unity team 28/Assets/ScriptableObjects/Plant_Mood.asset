@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 335e7661da2c65140b326b1e73fe4675, type: 3}
-  m_Name: Plant_Slow
+  m_Name: Plant_Mood
   m_EditorClassIdentifier: 
   growthStages:
   - sprite: {fileID: 21300000, guid: 59e9b161b3a821440af460d4fae8f602, type: 3}
