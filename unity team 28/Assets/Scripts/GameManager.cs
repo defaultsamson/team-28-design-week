@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
     public void Celebrate()
     {
         state = PETSTATE.Celebrating;
-        needObject.Unlock();
+        if(needObject != null) needObject.Unlock();
         pet.ResetAnimations();
         pet.animator.SetTrigger("Celebrate");
         pet.Wait(animSettings.CelebrateTime, Stand);

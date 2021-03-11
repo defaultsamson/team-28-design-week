@@ -153,4 +153,9 @@ public class Pet : MonoBehaviour
         ResetAnimations();
         animator.SetBool(anim, true);
     }
+
+    public void Eat()
+    {
+        Destroy(GameManager.Instance.needObject.gameObject);
+    }
 }
