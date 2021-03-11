@@ -1435,7 +1435,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 955556081}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.24, y: -2.61, z: 0}
+  m_LocalPosition: {x: -5.09, y: -2.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 893425943}
@@ -1458,8 +1458,11 @@ MonoBehaviour:
   ItemFab: {fileID: 0}
   dragElevation: 0.4
   elevationRate: 5
-  liftingAudio: {fileID: 0}
-  landingAudios: []
+  liftingAudio: {fileID: 8300000, guid: d719f68936ff6a84a897805e20e82237, type: 3}
+  landingAudios:
+  - {fileID: 8300000, guid: 2d95a19f3fa075f44a9b7b9f3f7c9715, type: 3}
+  - {fileID: 8300000, guid: a182182ef2aff0c47971a2d8bc0cb742, type: 3}
+  - {fileID: 8300000, guid: ea0e4fd10c742364fac699c75991d3d6, type: 3}
   dragSpeed: 5
 --- !u!50 &955556087
 Rigidbody2D:
@@ -1631,8 +1634,11 @@ MonoBehaviour:
   ItemFab: {fileID: 0}
   dragElevation: 0.4
   elevationRate: 5
-  liftingAudio: {fileID: 0}
-  landingAudios: []
+  liftingAudio: {fileID: 8300000, guid: d719f68936ff6a84a897805e20e82237, type: 3}
+  landingAudios:
+  - {fileID: 8300000, guid: 2d95a19f3fa075f44a9b7b9f3f7c9715, type: 3}
+  - {fileID: 8300000, guid: a182182ef2aff0c47971a2d8bc0cb742, type: 3}
+  - {fileID: 8300000, guid: ea0e4fd10c742364fac699c75991d3d6, type: 3}
   dragSpeed: 5
 --- !u!114 &1108818241
 MonoBehaviour:

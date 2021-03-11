@@ -12,8 +12,8 @@ public class DragDrop : MonoBehaviour
     SpriteRenderer sprite;
     public float dragElevation = 1.5f, elevationRate = 1f;
 
-    public AudioClip liftingAudio; // When picking up an object
-    public AudioClip[] landingAudios;
+    AudioClip liftingAudio; // When picking up an object
+    AudioClip[] landingAudios; // When hitting the ground
     AudioSource audioSource; // The source of the sound in-game (usually attached to the object)
     bool landed = true;
 
@@ -51,6 +51,13 @@ public class DragDrop : MonoBehaviour
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.spatialBlend = 1.0F;
         audioSource.rolloffMode = AudioRolloffMode.Linear;
+
+        // Loads the audio clips
+        liftingAudio = Resources.Load<AudioClip>("bloop");
+        landingAudios = new AudioClip[3];
+        landingAudios[0] = Resources.Load<AudioClip>("grass_1");
+        landingAudios[1] = Resources.Load<AudioClip>("grass_2");
+        landingAudios[2] = Resources.Load<AudioClip>("grass_3");
     }
 
     public void OnMouseDown()
@@ -122,9 +129,18 @@ public class DragDrop : MonoBehaviour
                 // Play the sound at different volumes depending on the impact speed
                 float volume = Mathf.Clamp(Mathf.Abs(shadowObject.ElevationVelocity / 7F), 0.0F, 0.4F);
                 // Select a random landing audio
+<<<<<<< Updated upstream
                 int rand = Random.Range(0, landingAudios.Length);
                 audioSource.PlayOneShot(landingAudios[rand], volume);
                 landed = true;
+=======
+                if (landingAudios.Length > 0)
+                {
+                    int rand = Random.Range(0, landingAudios.Length - 1);
+                    audioSource.PlayOneShot(landingAudios[rand], volume);
+                    landed = true;
+                }
+>>>>>>> Stashed changes
             }
         }
         else
