@@ -124,14 +124,15 @@ public class GameManager : MonoBehaviour
                 pet.animator.SetBool("Eating", true);
                 pet.Wait(animSettings.EatTime, Celebrate);
                 needObject.Lock();
-                petAudio.PlayOneShot(petAudioEating, 0.7F);
+                petAudio.PlayOneShot(petAudioEating, 0.4F);
                 break;
             case PETSTATE.Sleeping:
                 energy.Stat += 0.3f;
                 pet.animator.SetBool("Sleep", true);
                 pet.Wait(animSettings.SleepTime, Celebrate);
                 needObject.Lock();
-            break;
+                petAudio.PlayOneShot(petAudioSleep, 0.7F);
+                break;
             case PETSTATE.Kicking:
                 mood.Stat += 0.1f;
                 needObject.GetComponent<DragDrop>().Drop();
