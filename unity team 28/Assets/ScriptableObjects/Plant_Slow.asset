@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 335e7661da2c65140b326b1e73fe4675, type: 3}
+  m_Name: Plant_Slow
+  m_EditorClassIdentifier: 
+  growthStages:
+  - sprite: {fileID: 21300000, guid: 59e9b161b3a821440af460d4fae8f602, type: 3}
+    timeLasts: 1
+  - sprite: {fileID: 21300000, guid: d1fcbe2eab2ea284cbc5feb4b28381d9, type: 3}
+    timeLasts: 1
+  - sprite: {fileID: 21300000, guid: 589b9e64ef26808448973561518de762, type: 3}
+    timeLasts: 1
+  Glow: {fileID: 21300000, guid: d274b28c833318a4bb24742a407d7501, type: 3}
+  SpawnFab: {fileID: 2842217530241023993, guid: 19ca066bb7179a142a264a21a676143a,
+    type: 3}
