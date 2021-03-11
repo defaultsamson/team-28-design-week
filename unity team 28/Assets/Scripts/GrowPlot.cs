@@ -7,10 +7,18 @@ public class GrowPlot : MonoBehaviour
     //The stats of the growplot. None means its empty.
     public GROWSTATE state = GROWSTATE.None;
 
+
+    public AudioClip plantingAudio; // When planting the seed
+    public AudioClip growingAudio; // When the plant grows
+    AudioSource audioSource; // The source of the sound in-game (usually attached to the object)
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Sets up the audio to be 3D
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.spatialBlend = 1.0F;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
     }
 
     // Update is called once per frame
@@ -25,7 +33,7 @@ public class GrowPlot : MonoBehaviour
         state = GROWSTATE.Planted;
         GetComponent<SpriteRenderer>().color = Color.green;
         // Play the seed plant sound
-        GetComponent<AudioSource>().Play();
+        audioSource.PlayOneShot(plantingAudio, 0.8F);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
