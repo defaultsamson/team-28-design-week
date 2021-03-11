@@ -8,6 +8,10 @@ public class Plant : ScriptableObject
 {
 
     public Plant_GrowthStage[] growthStages = new Plant_GrowthStage[3];
+
+    public Sprite Glow;
+
+    public GameObject SpawnFab;
 }
 
 [Serializable]

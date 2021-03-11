@@ -37,12 +37,44 @@ public class GrowPlot : MonoBehaviour
 
     void Grow()
     {
-        GrowthStage++;
-        if(GrowthStage <= plant.growthStages.Length)
+        if(GrowthStage < plant.growthStages.Length)
         {
+            GrowthStage++;
             plantSprite.GetComponent<SpriteRenderer>().sprite =
                 plant.growthStages[GrowthStage - 1].sprite;
-            StartCoroutine(Wait(plant.growthStages[GrowthStage - 1].timeLasts, Grow));
+            StopAllCoroutines();
+            if (GrowthStage < plant.growthStages.Length) StartCoroutine(Wait(plant.growthStages[GrowthStage - 1].timeLasts, Grow));
+        }
+        
+    }
+
+    private void OnMouseEnter()
+    {
+        if (plant == null) return;
+        if(GrowthStage == plant.growthStages.Length)
+        {
+            plantSprite.GetComponent<SpriteRenderer>().sprite = plant.Glow;
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        if (plant == null) return;
+        if (plantSprite == null) return;
+        if(GrowthStage == plant.growthStages.Length) plantSprite.GetComponent<SpriteRenderer>().sprite =
+                plant.growthStages[GrowthStage - 1].sprite;
+    }
+
+    private void OnMouseDown()
+    {
+        if (plant == null) return;
+        if (GrowthStage == plant.growthStages.Length)
+        {
+            plantSprite.GetComponent<SpriteRenderer>().sprite = null;
+            GameObject obj = Instantiate(plant.SpawnFab);
+            obj.transform.position = transform.position;
+            GrowthStage = 0;
+            state = GROWSTATE.None;
         }
         
     }
@@ -69,6 +101,7 @@ public class GrowPlot : MonoBehaviour
             }
         }
     }
+    
 
     IEnumerator Wait(float time, Action callback)
     {
