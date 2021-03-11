@@ -35,6 +35,7 @@ public class ShadowObject : MonoBehaviour
     public float ElevationVelocity
     {
         get { return elevationVelocity; }
+        set { elevationVelocity = value; }
     }
 
     // Start is called before the first frame update
@@ -146,6 +147,14 @@ public class ShadowObject : MonoBehaviour
                 velocity = new Vector2(velocity.x, 0f);
                 break;
         }
+    }
+
+    public void Launch(Vector2 force, float elevationForce)
+    {
+        velocity = force;
+        grounded = false;
+        if (elevation <= 0f) elevation = 0.1f;
+        elevationVelocity = elevationForce;
     }
 
     private void OnDestroy()

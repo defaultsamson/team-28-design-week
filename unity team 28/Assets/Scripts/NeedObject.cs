@@ -22,4 +22,14 @@ public class NeedObject : MonoBehaviour
         }
         return _out;
     }
+
+    public void Lock()
+    {
+        GetComponent<DragDrop>().Locked = true;
+    }
+
+    public void Unlock()
+    {
+        GetComponent<DragDrop>().Locked = false;
+    }
 }

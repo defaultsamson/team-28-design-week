@@ -12,6 +12,24 @@ public class DragDrop : MonoBehaviour
     SpriteRenderer sprite;
     public float dragElevation = 1.5f, elevationRate = 1f;
 
+    bool locked = false;
+    public bool Locked
+    {
+        get { return locked; }
+        set
+        {
+            if (value)
+            {
+                Drop();
+                if (shadowObject)
+                {
+                    shadowObject.velocity = Vector2.zero;
+                }
+            }
+            locked = value;
+        }
+    }
+
     public bool Dragging
     {
         get { return dragging; }
@@ -27,7 +45,7 @@ public class DragDrop : MonoBehaviour
 
     public void OnMouseDown()
     {
-        Drag();
+        if(!locked) Drag();
     }
 
     private void OnMouseUp()

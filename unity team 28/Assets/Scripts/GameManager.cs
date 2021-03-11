@@ -2,12 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     public NeedObject needObject;
+    [Serializable]
+    class AnimationSettings
+    {
+        public Vector2 IdleTime = Vector2.zero;
+        public float SleepTime = 9.5f;
+        public float EatTime = 3f;
+        public float CelebrateTime = 1f;
+       
+    }
+    [SerializeField]
+    AnimationSettings animSettings;
     private void Awake()
     {
         if (Instance == null)
@@ -82,9 +94,98 @@ public class GameManager : MonoBehaviour
     {
         //Do Need Need Task
         pet.ResetAnimations();
+
+        if(needObject == null)
+        {
+            mood.Stat -= 0.1f;
+            Upset();
+            return;
+        }
+        state = needObject.toState;
+
+        switch (state)
+        {
+            case PETSTATE.Eating:
+                nutrition.Stat += 0.2f;
+                pet.animator.SetBool("Eating", true);
+                pet.Wait(animSettings.EatTime, Celebrate);
+                needObject.Lock();
+            break;
+            case PETSTATE.Sleeping:
+                energy.Stat += 0.3f;
+                pet.animator.SetBool("Sleep", true);
+                pet.Wait(animSettings.SleepTime, Celebrate);
+                needObject.Lock();
+            break;
+            case PETSTATE.Kicking:
+                mood.Stat += 0.1f;
+                needObject.GetComponent<DragDrop>().Drop();
+                Vector2 kickVel = Random.insideUnitCircle * Random.Range(12f, 15f);
+                needObject.GetComponent<ShadowObject>().Launch(kickVel, 2f);
+                if (Random.Range(0f, 1f) > mood.Stat)
+                {
+                    pet.Wait(0.5f, ChaseBall);
+                }
+                else
+                {
+                    Celebrate();
+                }
+                break;
+        }
     }
 
+    public void ChaseBall()
+    {
+        if(needObject != null)
+        {
+            state = PETSTATE.Chasing;
+            pet.Chase(this.needObject, ChaseComplete);
+            pet.ResetAnimations("Wander");
+        }
+        else
+        {
+            Stand();
+        }
+    }
 
+    public void Celebrate()
+    {
+        state = PETSTATE.Celebrating;
+        needObject.Unlock();
+        pet.ResetAnimations();
+        pet.animator.SetTrigger("Celebrate");
+        pet.Wait(animSettings.CelebrateTime, Stand);
+    }
+
+    public void Upset()
+    {
+        state = PETSTATE.Celebrating;
+        pet.ResetAnimations();
+        pet.animator.SetTrigger("Upset");
+        pet.Wait(animSettings.CelebrateTime, Stand);
+    }
+
+    public void Wander()
+    {
+        state = PETSTATE.Wandering;
+        if(health < 0.5)
+        {
+            pet.ResetAnimations("WanderUnsatisfied");
+            pet.Wander(Stand);
+        }
+        else
+        {
+            pet.ResetAnimations("Wander");
+            pet.Wander(Stand);
+        }
+    }
+
+    public void Stand()
+    {
+        state = PETSTATE.None;
+        pet.ResetAnimations();
+        pet.Wait(Random.Range(animSettings.IdleTime.x, animSettings.IdleTime.y), Wander);
+    }
 
 }
 
@@ -115,7 +216,9 @@ public enum PETSTATE
     None,
     Wandering,
     Chasing,
-    Kickin,
+    Kicking,
     Eating,
-    Sleeping
+    Sleeping,
+    Celebrating,
+    Upset
 }

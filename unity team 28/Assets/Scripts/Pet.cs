@@ -58,17 +58,24 @@ public class Pet : MonoBehaviour
 
     public void Chase(NeedObject needObject, Action callBack)
     {
+        StopAllCoroutines();
         if(coroutine!=null)StopCoroutine(coroutine);
         coroutine = StartCoroutine(MoveWithin(needObject, callBack));
     }
 
-    public void Wander()
+    public void Wander(Action callBack)
     {
-        if (coroutine != null) StopCoroutine(coroutine);
+        StopAllCoroutines();
         Vector2 randomPoint = GameManager.Instance.ClampInBounds(
                 (Vector2)transform.position + (Random.insideUnitCircle * Random.Range(3f, 7f))
                 );
-        StartCoroutine(MoveTo(randomPoint));
+        StartCoroutine(MoveTo(randomPoint,callBack));
+    }
+
+    public void Wait(float time, Action callback)
+    {
+        StopAllCoroutines();
+        coroutine = StartCoroutine(WaitTill(time, callback));
     }
 
     //Coroutine to move with a certain distance of a target
@@ -91,21 +98,22 @@ public class Pet : MonoBehaviour
                 transform.localScale = new Vector3(-scale, scale, 1f);
             else
                 transform.localScale = new Vector3(scale, scale, 1f);
-            transform.position = Vector2.MoveTowards(transform.position, target.ClosestPos((Vector2)transform.position).position, speed * Time.deltaTime);
 
+            transform.position = Vector2.MoveTowards(transform.position, target.ClosestPos((Vector2)transform.position).position, speed * Time.deltaTime);
 
             yield return null;
         }
         callBack.Invoke();
     }
 
-    IEnumerator MoveTo(Vector2 point)
+    IEnumerator MoveTo(Vector2 point, Action callback)
     {
 
         float speedRef = 0f;
         float distance = Vector2.Distance(point, transform.position);
         while (distance > acceptableVariance)
         {
+            if (target == null) break;
             distance = Vector2.Distance(point, transform.position);
 
             if (distance > distToSlow || speed < minSpeed)
@@ -122,6 +130,13 @@ public class Pet : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, point, speed * Time.deltaTime);
             yield return null;
         }
+        callback.Invoke();
+    }
+
+    IEnumerator WaitTill(float time, Action callback)
+    {
+        yield return new WaitForSeconds(time);
+        callback.Invoke();
     }
 
     public void ResetAnimations()
