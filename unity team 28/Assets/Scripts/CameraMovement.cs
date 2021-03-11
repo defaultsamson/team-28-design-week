@@ -33,12 +33,12 @@ public class CameraMovement : MonoBehaviour
         Vector3 movementVec = Vector3.zero;
 
         // Right
-        if (Input.GetKey(KeyCode.D) || Input.mousePosition.x >= Screen.width - threshold)
+        if (Input.GetKey(KeyCode.D))
         {
             movementVec += new Vector3(speed, 0, 0);
         }
         // Left
-        else if (Input.GetKey(KeyCode.A) || Input.mousePosition.x <= threshold)
+        else if (Input.GetKey(KeyCode.A))
         {
             movementVec += new Vector3(-speed, 0, 0);
         }

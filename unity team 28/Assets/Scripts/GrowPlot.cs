@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,10 @@ public class GrowPlot : MonoBehaviour
 {
     //The stats of the growplot. None means its empty.
     public GROWSTATE state = GROWSTATE.None;
+    Plant plant;
+    int GrowthStage;
+
+    public GameObject plantSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -20,12 +25,26 @@ public class GrowPlot : MonoBehaviour
     }
 
     //The function that triggers when a seed is planted.
-    void PlantSeed()
+    void PlantSeed(Plant plant)
     {
         state = GROWSTATE.Planted;
-        GetComponent<SpriteRenderer>().color = Color.green;
+        this.plant = plant;
+        GrowthStage = 0;
+        Grow();
         // Play the seed plant sound
         GetComponent<AudioSource>().Play();
+    }
+
+    void Grow()
+    {
+        GrowthStage++;
+        if(GrowthStage <= plant.growthStages.Length)
+        {
+            plantSprite.GetComponent<SpriteRenderer>().sprite =
+                plant.growthStages[GrowthStage - 1].sprite;
+            StartCoroutine(Wait(plant.growthStages[GrowthStage - 1].timeLasts, Grow));
+        }
+        
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -44,11 +63,17 @@ public class GrowPlot : MonoBehaviour
                 if (!seed.consumed)
                 {
                     seed.consumed = true;
-                    PlantSeed();
+                    PlantSeed(seed.plant);
                     Destroy(collision.gameObject);
                 }
             }
         }
+    }
+
+    IEnumerator Wait(float time, Action callback)
+    {
+        yield return new WaitForSeconds(time);
+        callback.Invoke();
     }
 
 }

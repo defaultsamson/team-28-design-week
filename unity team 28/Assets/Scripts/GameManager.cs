@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     //A Vector 4 that will track it. x/y is the bottom left corner, z/w is the top right cornder.
     public Vector4 bounds;
 
+    public event Action<float> OnPetMove;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +62,14 @@ public class GameManager : MonoBehaviour
    void FixedUpdate()
     {
         foreach (Need need in needs) need.DecayTick();
+    }
+
+    public void PetMove()
+    {
+        if(OnPetMove != null)
+        {
+            OnPetMove(pet.transform.position.y);
+        }
     }
 
     //A clamp used to ensure the properties stay in bounds.

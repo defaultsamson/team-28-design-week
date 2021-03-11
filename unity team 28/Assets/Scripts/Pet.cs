@@ -15,9 +15,6 @@ public class Pet : MonoBehaviour
     //Pets minimum speed
     public float minSpeed = 1f;
 
-    //The target the pet moves to
-    public Transform target;
-
     /*How lenient are we with where the pet should be standing. 
      * Increase this number if the pet jitters when it reaches the target
      * Decrease this number if the pet stops abruptly at its target location.
@@ -85,6 +82,7 @@ public class Pet : MonoBehaviour
         float distance = Vector2.Distance(target.ClosestPos((Vector2)transform.position).position, transform.position);
         while (distance > acceptableVariance)
         {
+            if (target == null) break;
             distance = Vector2.Distance(target.ClosestPos((Vector2)transform.position).position, transform.position);
 
             if (distance > distToSlow)
@@ -100,7 +98,7 @@ public class Pet : MonoBehaviour
                 transform.localScale = new Vector3(scale, scale, 1f);
 
             transform.position = Vector2.MoveTowards(transform.position, target.ClosestPos((Vector2)transform.position).position, speed * Time.deltaTime);
-
+            GameManager.Instance.PetMove();
             yield return null;
         }
         callBack.Invoke();
@@ -108,12 +106,15 @@ public class Pet : MonoBehaviour
 
     IEnumerator MoveTo(Vector2 point, Action callback)
     {
-
+        if (point.x > transform.position.x)
+            transform.localScale = new Vector3(-scale, scale, 1f);
+        else
+            transform.localScale = new Vector3(scale, scale, 1f);
         float speedRef = 0f;
         float distance = Vector2.Distance(point, transform.position);
         while (distance > acceptableVariance)
         {
-            if (target == null) break;
+            
             distance = Vector2.Distance(point, transform.position);
 
             if (distance > distToSlow || speed < minSpeed)
@@ -128,6 +129,7 @@ public class Pet : MonoBehaviour
             speed = minSpeed + accelCurve.Evaluate(speedRef) * maxSpeed;
 
             transform.position = Vector2.MoveTowards(transform.position, point, speed * Time.deltaTime);
+            GameManager.Instance.PetMove();
             yield return null;
         }
         callback.Invoke();

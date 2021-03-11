@@ -9,7 +9,7 @@ public class DragDrop : MonoBehaviour
     bool dragging;
     ShadowObject shadowObject;
     NeedObject needObject;
-    SpriteRenderer sprite;
+    SpriteObject sprite;
     public float dragElevation = 1.5f, elevationRate = 1f;
 
     bool locked = false;
@@ -39,10 +39,15 @@ public class DragDrop : MonoBehaviour
     private void Awake()
     {
         shadowObject = GetComponent<ShadowObject>();
-        sprite = GetComponent<SpriteRenderer>();
+        sprite = GetComponent<SpriteObject>();
         needObject = GetComponent<NeedObject>();
     }
-
+    private void Start()
+    {
+        shadowObject = GetComponent<ShadowObject>();
+        sprite = GetComponent<SpriteObject>();
+        needObject = GetComponent<NeedObject>();
+    }
     public void OnMouseDown()
     {
         if(!locked) Drag();
@@ -57,7 +62,7 @@ public class DragDrop : MonoBehaviour
     public void Drag(bool elevated = false)
     {
         dragging = true;
-        sprite.sortingOrder++;
+        sprite.OrderInLayer++;
         shadowObject.GravityEnabled = false;
         if (elevated) shadowObject.Elevate(dragElevation, false);
     }
@@ -66,7 +71,7 @@ public class DragDrop : MonoBehaviour
     {
         if (!dragging) return;
         dragging = false;
-        sprite.sortingOrder--;
+        sprite.OrderInLayer--;
         shadowObject.GravityEnabled = true;
         if(needObject) GameManager.Instance.Introduce(needObject);
     }

@@ -8,4 +8,6 @@ public class Seed : MonoBehaviour
     //The consumed vairable stops multiple plots from growing.
     [HideInInspector]
     public bool consumed = false;
+
+    public Plant plant;
 }
