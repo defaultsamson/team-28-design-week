@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthStages:
   - sprite: {fileID: 21300000, guid: 59e9b161b3a821440af460d4fae8f602, type: 3}
-    timeLasts: 1
+    timeLasts: 15
   - sprite: {fileID: 21300000, guid: d1fcbe2eab2ea284cbc5feb4b28381d9, type: 3}
-    timeLasts: 1
-  - sprite: {fileID: 21300000, guid: 589b9e64ef26808448973561518de762, type: 3}
-    timeLasts: 1
-  Glow: {fileID: 21300000, guid: d274b28c833318a4bb24742a407d7501, type: 3}
-  SpawnFab: {fileID: 2842217530241023993, guid: 19ca066bb7179a142a264a21a676143a,
+    timeLasts: 15
+  - sprite: {fileID: 21300000, guid: f2e47a7248c4ff34195d4b77cf27916a, type: 3}
+    timeLasts: 15
+  Glow: {fileID: 21300000, guid: a7833ea3a5fd9164ea05b97067f387d9, type: 3}
+  SpawnFab: {fileID: 4399026800916786217, guid: 294740e72d6c8f548aed54b91d85d6c9,
     type: 3}
