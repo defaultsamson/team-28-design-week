@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour
 
     public void Upset()
     {
-        state = PETSTATE.Celebrating;
+        state = PETSTATE.Upset;
         pet.ResetAnimations();
         pet.animator.SetTrigger("Upset");
         pet.Wait(animSettings.CelebrateTime, Stand);
