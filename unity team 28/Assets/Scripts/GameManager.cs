@@ -86,7 +86,10 @@ public class GameManager : MonoBehaviour
 
         if (goodMoods == 3) health += 0.05f * Time.fixedDeltaTime;
         health = Mathf.Clamp(health, 0f, 1f);
-
+        if(health == 0f)
+        {
+            GetComponent<SceneLoader>().LoadScene("GameOver");
+        }
         healthBar.SetHealth(health);
     }
 
