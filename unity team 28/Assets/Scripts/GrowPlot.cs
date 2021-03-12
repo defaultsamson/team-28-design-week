@@ -12,10 +12,18 @@ public class GrowPlot : MonoBehaviour
 
     public GameObject plantSprite;
 
+
+    public AudioClip plantingAudio; // When planting the seed
+    public AudioClip growingAudio; // When the plant grows
+    AudioSource audioSource; // The source of the sound in-game (usually attached to the object)
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Sets up the audio to be 3D
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.spatialBlend = 1.0F;
+        audioSource.rolloffMode = AudioRolloffMode.Linear;
     }
 
     // Update is called once per frame
@@ -32,7 +40,7 @@ public class GrowPlot : MonoBehaviour
         GrowthStage = 0;
         Grow();
         // Play the seed plant sound
-        GetComponent<AudioSource>().Play();
+        audioSource.PlayOneShot(plantingAudio, 0.6F);
     }
 
     void Grow()

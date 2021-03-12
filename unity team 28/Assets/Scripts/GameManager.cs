@@ -30,6 +30,14 @@ public class GameManager : MonoBehaviour
     }
     public Pet pet;
     public PETSTATE state = PETSTATE.None;
+
+    AudioSource petAudio;
+    AudioClip petAudioCelebrating;
+    AudioClip petAudioUpset;
+    AudioClip petAudioEating;
+    AudioClip petAudioKick;
+    AudioClip petAudioSleep;
+
     //The diffrent needs that will be turned to meters.
     public Need nutrition, energy, mood;
     //The health of the pet
@@ -53,12 +61,18 @@ public class GameManager : MonoBehaviour
     {
         needs = new Need[] { nutrition, energy, mood };
         bounds = new Vector4(min.position.x, min.position.y, max.position.x, max.position.y);
+
+        petAudioCelebrating = Resources.Load<AudioClip>("monster_6");
+        petAudioUpset = Resources.Load<AudioClip>("monster_4");
+        petAudioEating = Resources.Load<AudioClip>("eating");
+        petAudioKick = Resources.Load<AudioClip>("ball_1");
+        petAudioSleep = Resources.Load<AudioClip>("monster_8");
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        petAudio = pet.GetComponent<AudioSource>();
     }
 
    void FixedUpdate()
@@ -139,16 +153,19 @@ public class GameManager : MonoBehaviour
                 pet.animator.SetBool("Eating", true);
                 pet.Wait(animSettings.EatTime, Celebrate);
                 needObject.Lock();
-            break;
+                petAudio.PlayOneShot(petAudioEating, 0.4F);
+                break;
             case PETSTATE.Sleeping:
                 pet.animator.SetBool("Sleep", true);
                 pet.Wait(animSettings.SleepTime, Celebrate);
                 needObject.Lock();
-            break;
+                petAudio.PlayOneShot(petAudioSleep, 0.7F);
+                break;
             case PETSTATE.Kicking:
                 needObject.GetComponent<DragDrop>().Drop();
                 Vector2 kickVel = Random.insideUnitCircle * Random.Range(12f, 15f);
                 needObject.GetComponent<ShadowObject>().Launch(kickVel, 2f);
+                petAudio.PlayOneShot(petAudioKick, 1.0F);
                 if (Random.Range(0f, 1f) > mood.Stat)
                 {
                     pet.Wait(0.5f, ChaseBall);
@@ -182,6 +199,7 @@ public class GameManager : MonoBehaviour
         pet.ResetAnimations();
         pet.animator.SetTrigger("Celebrate");
         pet.Wait(animSettings.CelebrateTime, Stand);
+        petAudio.PlayOneShot(petAudioCelebrating, 1.0F);
     }
 
     public void Upset()
@@ -190,6 +208,7 @@ public class GameManager : MonoBehaviour
         pet.ResetAnimations();
         pet.animator.SetTrigger("Upset");
         pet.Wait(animSettings.CelebrateTime, Stand);
+        petAudio.PlayOneShot(petAudioUpset, 1.0F);
     }
 
     public void Wander()
