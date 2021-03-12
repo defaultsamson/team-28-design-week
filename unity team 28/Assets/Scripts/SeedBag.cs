@@ -11,7 +11,6 @@ public class SeedBag : MonoBehaviour
     public SpriteRenderer glow;
 
     AudioClip scoopAudio;
-    //AudioClip glowAudio;
     AudioSource audioSource; // The source of the sound in-game (usually attached to the object)
 
     private void Start()
@@ -20,11 +19,10 @@ public class SeedBag : MonoBehaviour
 
         // Sets up the audio to be 3D
         audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.spatialBlend = 1.0F;
+        audioSource.spatialBlend = 0.5F;
         audioSource.rolloffMode = AudioRolloffMode.Linear;
 
         scoopAudio = Resources.Load<AudioClip>("scooping_seeds");
-        //glowAudio = Resources.Load<AudioClip>("plant_grow");
     }
 
     private void OnMouseEnter()

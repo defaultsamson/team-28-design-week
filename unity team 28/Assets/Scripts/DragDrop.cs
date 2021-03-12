@@ -129,13 +129,9 @@ public class DragDrop : MonoBehaviour
                 // Play the sound at different volumes depending on the impact speed
                 float volume = Mathf.Clamp(Mathf.Abs(shadowObject.ElevationVelocity / 7F), 0.0F, 0.4F);
                 // Select a random landing audio
-
-                if (landingAudios.Length > 0)
-                {
-                    int rand = Random.Range(0, landingAudios.Length - 1);
-                    audioSource.PlayOneShot(landingAudios[rand], volume);
-                    landed = true;
-                }
+                int rand = Random.Range(0, landingAudios.Length - 1);
+                audioSource.PlayOneShot(landingAudios[rand], volume);
+                landed = true;
             }
         }
         else
