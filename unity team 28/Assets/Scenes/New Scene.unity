@@ -1855,6 +1855,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 122362213908406580, guid: 0f6e362cb40aa894489fe4a9a9051c86,
+        type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 122362213908406580, guid: 0f6e362cb40aa894489fe4a9a9051c86,
+        type: 3}
+      propertyPath: rolloffMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 122362213908406580, guid: 0f6e362cb40aa894489fe4a9a9051c86,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 122362213908406580, guid: 0f6e362cb40aa894489fe4a9a9051c86,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 122362213908406591, guid: 0f6e362cb40aa894489fe4a9a9051c86,
         type: 3}
       propertyPath: m_Name
@@ -1865,7 +1885,8 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 122362213908406580, guid: 0f6e362cb40aa894489fe4a9a9051c86, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0f6e362cb40aa894489fe4a9a9051c86, type: 3}
 --- !u!1 &512600585
 GameObject:
@@ -2096,7 +2117,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrowPlot (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 122362213908406580, guid: 0f6e362cb40aa894489fe4a9a9051c86, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0f6e362cb40aa894489fe4a9a9051c86, type: 3}
 --- !u!1 &551826302
 GameObject:
@@ -3889,7 +3911,8 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 122362213908406580, guid: 0f6e362cb40aa894489fe4a9a9051c86, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0f6e362cb40aa894489fe4a9a9051c86, type: 3}
 --- !u!1 &1157618686
 GameObject:
@@ -7560,7 +7583,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrowPlot (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 122362213908406580, guid: 0f6e362cb40aa894489fe4a9a9051c86, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0f6e362cb40aa894489fe4a9a9051c86, type: 3}
 --- !u!1 &2000836661
 GameObject:

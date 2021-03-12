@@ -51,7 +51,7 @@ public class GrowPlot : MonoBehaviour
         if(GrowthStage < plant.growthStages.Length)
         {
             // Only play audio if it's not the first time growing
-            if (GrowthStage > 0) audioSource.PlayOneShot(growingAudio, 0.6F);
+            if (GrowthStage > 0) audioSource.PlayOneShot(growingAudio, 0.2F);
             GrowthStage++;
             plantSprite.GetComponent<SpriteRenderer>().sprite =
                 plant.growthStages[GrowthStage - 1].sprite;
