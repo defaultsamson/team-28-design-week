@@ -263,6 +263,6 @@ MonoBehaviour:
   NeedPos:
   - {fileID: 2842217530197755423}
   - {fileID: 2842217528734089524}
-  nutritionGain: 0.1
+  nutritionGain: 0.15
   energyGain: 0
   moodGain: 0

@@ -195,7 +195,7 @@ MonoBehaviour:
   - {fileID: 2544772947472268868}
   nutritionGain: 0
   energyGain: 0
-  moodGain: 0.1
+  moodGain: 0.15
 --- !u!1 &2544772946885729115
 GameObject:
   m_ObjectHideFlags: 0
