@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GrowPlot : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class GrowPlot : MonoBehaviour
 
 
     AudioClip plantingAudio; // When planting the seed
-    AudioClip growingAudio; // When the plant grows
+    AudioClip[] growingAudios; // When the plant grows
+    AudioClip[] choppingAudios; // When the plant gets chopped
     AudioSource audioSource; // The source of the sound in-game (usually attached to the object)
 
     // Start is called before the first frame update
@@ -26,7 +28,14 @@ public class GrowPlot : MonoBehaviour
         audioSource.rolloffMode = AudioRolloffMode.Linear;
 
         plantingAudio = Resources.Load<AudioClip>("planting");
-        growingAudio = Resources.Load<AudioClip>("plant_grow");
+        growingAudios = new AudioClip[3];
+        growingAudios[0] = Resources.Load<AudioClip>("growing_1");
+        growingAudios[1] = Resources.Load<AudioClip>("growing_2");
+        growingAudios[2] = Resources.Load<AudioClip>("growing_3");
+        choppingAudios = new AudioClip[3];
+        choppingAudios[0] = Resources.Load<AudioClip>("chopping_1");
+        choppingAudios[1] = Resources.Load<AudioClip>("chopping_2");
+        choppingAudios[2] = Resources.Load<AudioClip>("chopping_3");
     }
 
     // Update is called once per frame
@@ -43,7 +52,7 @@ public class GrowPlot : MonoBehaviour
         GrowthStage = 0;
         Grow();
         // Play the seed plant sound
-        audioSource.PlayOneShot(plantingAudio, 0.6F);
+        audioSource.PlayOneShot(plantingAudio, 0.4F);
     }
 
     void Grow()
@@ -51,7 +60,12 @@ public class GrowPlot : MonoBehaviour
         if(GrowthStage < plant.growthStages.Length)
         {
             // Only play audio if it's not the first time growing
-            if (GrowthStage > 0) audioSource.PlayOneShot(growingAudio, 0.6F);
+            if (GrowthStage > 0)
+            {
+                // Select a random growing audio
+                int rand = Random.Range(0, growingAudios.Length - 1);
+                audioSource.PlayOneShot(growingAudios[rand], 0.15F);
+            }
             GrowthStage++;
             plantSprite.GetComponent<SpriteRenderer>().sprite =
                 plant.growthStages[GrowthStage - 1].sprite;
@@ -88,6 +102,10 @@ public class GrowPlot : MonoBehaviour
             obj.transform.position = transform.position;
             GrowthStage = 0;
             state = GROWSTATE.None;
+
+            // Select a random chopping audio
+            int rand = Random.Range(0, choppingAudios.Length - 1);
+            audioSource.PlayOneShot(choppingAudios[rand], 0.4F);
         }
         
     }
