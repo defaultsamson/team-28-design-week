@@ -46,12 +46,6 @@ public class DragDrop : MonoBehaviour
         shadowObject = GetComponent<ShadowObject>();
         sprite = GetComponent<SpriteObject>();
         needObject = GetComponent<NeedObject>();
-    }
-    private void Start()
-    {
-        shadowObject = GetComponent<ShadowObject>();
-        sprite = GetComponent<SpriteObject>();
-        needObject = GetComponent<NeedObject>();
 
         // Sets up the audio to be 3D
         audioSource = gameObject.AddComponent<AudioSource>();
@@ -65,6 +59,7 @@ public class DragDrop : MonoBehaviour
         landingAudios[1] = Resources.Load<AudioClip>("grass_2");
         landingAudios[2] = Resources.Load<AudioClip>("grass_3");
     }
+
     public void OnMouseDown()
     {
         if(!locked) Drag();

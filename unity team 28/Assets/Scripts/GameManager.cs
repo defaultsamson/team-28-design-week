@@ -62,17 +62,13 @@ public class GameManager : MonoBehaviour
         needs = new Need[] { nutrition, energy, mood };
         bounds = new Vector4(min.position.x, min.position.y, max.position.x, max.position.y);
 
+        petAudio = pet.GetComponent<AudioSource>();
+
         petAudioCelebrating = Resources.Load<AudioClip>("monster_6");
         petAudioUpset = Resources.Load<AudioClip>("monster_4");
         petAudioEating = Resources.Load<AudioClip>("eating");
         petAudioKick = Resources.Load<AudioClip>("ball_1");
         petAudioSleep = Resources.Load<AudioClip>("monster_8");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        petAudio = pet.GetComponent<AudioSource>();
     }
 
    void FixedUpdate()
@@ -165,7 +161,7 @@ public class GameManager : MonoBehaviour
                 needObject.GetComponent<DragDrop>().Drop();
                 Vector2 kickVel = Random.insideUnitCircle * Random.Range(12f, 15f);
                 needObject.GetComponent<ShadowObject>().Launch(kickVel, 2f);
-                petAudio.PlayOneShot(petAudioKick, 1.0F);
+                petAudio.PlayOneShot(petAudioKick, 0.8F);
                 if (Random.Range(0f, 1f) > mood.Stat)
                 {
                     pet.Wait(0.5f, ChaseBall);
